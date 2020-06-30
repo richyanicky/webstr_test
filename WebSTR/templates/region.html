@@ -1,0 +1,412 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157646340-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+        gtag('config', 'UA-157646340-1');
+</script>
+
+<!-- Div for the plotly chart -->
+<div id="chart" class="chart"></div>
+<script type="text/javascript">
+  var chrom = {{chrom}};
+  var graphs = {{graphJSON | safe}};
+  var layout = {{layoutJSON | safe}};
+  var strids = {{strids | safe}};
+
+  var myPlot = document.getElementById('chart'),
+    d3 = Plotly.d3,
+    data = graphs,
+    layout=layout;
+
+  Plotly.newPlot('chart', data, layout);
+
+  myPlot.on('plotly_click', function(data){
+    for(var i=0; i < data.points.length; i++){
+        if (data.points[i].curveNumber==1) {
+          url="None";
+        }
+        else {
+          url="/locus?STRID="+strids[data.points[i].pointNumber]
+        }
+    }
+    if (url != "None") {
+    var win = window.open(url, "_blank");
+    win.focus();
+    }
+});
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip(); 
+});
+
+
+</script>
+<style>
+mark.red {
+    color:#ff0000;
+    background: white;}
+mark.gray {
+    color:gray;
+    background: white;}
+mark.gold {
+    color:gold;
+    background: white;}
+mark.blue {
+    color:blue;
+    background: white;}
+mark.purple {
+    color:purple;
+    background: white;}
+mark.green {
+    color:green;
+    background: white;}
+
+<<<<<<< HEAD
+ .switch {
+	 position: relative;
+	 display: block;
+	 vertical-align: top;
+	 width: 100px;
+	 height: 30px;
+	 padding: 3px;
+	 margin: 0 10px 10px 0;
+         background: linear-gradient(to bottom, #eeeeee, #FFFFFF 25px);
+       background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF 25px);
+            border-radius: 18px;
+           box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+         cursor: pointer;
+	     }
+     .switch-input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+	         }
+
+
+   .switch-label {
+    position: relative;
+    display: block;
+    height: inherit;
+    font-size: 10px;
+    background: #eceeef;
+    border-radius: inherit;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+       }
+       .switch-label:before, .switch-label:after {
+        position: absolute;
+        top: 50%;
+        margin-top: -.5em;
+       line-height: 1;
+        -webkit-transition: inherit;
+        -moz-transition: inherit;
+        -o-transition: inherit;
+       transition: inherit;
+          }
+      .switch-label:before {
+        content: attr(data-on);
+       right: 14px;
+       color: #90ee90;
+       text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+      }
+      .switch-label:after {
+       content: attr(data-off);
+       left: 14px;
+       color: #FFFFFF;
+       text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+       opacity: 0;
+         }
+      .switch-input:checked ~ .switch-label {
+       background: #E1B42B;
+       box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+    }
+       .switch-input:checked ~ .switch-label:before {
+        opacity: 0;
+        }
+       .switch-input:checked ~ .switch-label:after {
+         opacity: 1;
+     }
+       .switch-handle {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        width: 28px;
+        height: 28px;
+        background: linear-gradient(to bottom, #FFFFFF 40%, #f0f0f0);
+         background-image: -webkit-linear-gradient(top, #FFFFFF 40%, #f0f0f0);
+       border-radius: 100%;
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+         }
+        .switch-handle:before {
+         content: "";
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         margin: -6px 0 0 -6px;
+         width: 12px;
+         height: 12px;
+         background: linear-gradient(to bottom, #eeeeee, #FFFFFF);
+         background-image: -webkit-linear-gradient(top, #eeeeee, #FFFFFF);
+         border-radius: 6px;
+         box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+         }
+       .switch-input:checked ~ .switch-handle {
+           left: 74px;
+           box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+      }
+	           /* Transition
+             ========================== */
+        .switch-label, .switch-handle {
+         transition: All 0.3s ease;
+       -webkit-transition: All 0.3s ease;
+       -moz-transition: All 0.3s ease;
+        -o-transition: All 0.3s ease;
+       }
+					       
+=======
+
+.switch {
+  position: relative;
+    display: inline-block;
+	     width: 80px;
+	     height: 34px;
+}
+
+	    /* Hide default HTML checkbox */
+    .switch input {
+	      opacity: 0;
+	        width: 0;
+		  height: 0;
+	    }
+
+>>>>>>> d54144eb894dc9ee1d51d269efb5e5c5255e28f3
+	    /* The slider */
+    .sliderh {
+      position: absolute;
+	        cursor: pointer;
+	  top: 0;
+	    left: 0;
+      right: 0;
+        bottom: 0;
+	  background-color: #ccc;
+	    -webkit-transition: .4s;
+	      transition: .4s;
+    }
+<<<<<<< HEAD
+    .sliderh:before {
+      position: absolute;
+	  height: 20px;
+    width: 20px;
+      left: 4px;
+	      content: "HipSTR";
+=======
+    #sliderabch {
+		  background-image: url(static/images/HipSTR.jp2);
+		  background-size: 25% 25%;
+	    }
+    .sliderh:before {
+      position: absolute;
+	  height: 26px;
+    width: 26px;
+      left: 4px;
+>>>>>>> d54144eb894dc9ee1d51d269efb5e5c5255e28f3
+        bottom: 4px;
+	  background-color: green;
+          background-size: auto;
+    -webkit-transition: .4s;
+      transition: .4s;
+	    }
+<<<<<<< HEAD
+	    input:hover + .sliderh {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	  }
+	  input:checked + .sliderh:before {
+	    -webkit-transform: translateX(36px);
+	    -ms-transform: translateX(36px);
+	    transform: translateX(36px);
+	  }
+	  .sliderh:after {
+		  background-color: red;
+			  }
+	  input:checked + .sliderh {
+		background-color: #ccc;
+	  }
+
+         /* The slider */
+	      .sliderg {
+		     position: absolute;
+		     cursor: pointer;
+		     top: 0;
+		     left: 0;
+		     right: 0;
+		     bottom: 0;
+		         background-color: #ccc;
+		        -webkit-transition: .4s;
+		         transition: .4s;
+		        }
+	          .sliderg:before {
+		        position: absolute;
+		          height: 20px;
+		     width: 20px;
+		           left: 4px;
+		                content: "GangSTR";
+			        bottom: 4px;
+			        background-color: green;
+			        background-size: auto;
+			       -webkit-transition: .4s;
+			        transition: .4s;
+			            }
+	              input:hover + .sliderg {
+		            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+			       }
+             input:checked + .sliderg:before {
+            -webkit-transform: translateX(36px);
+               -ms-transform: translateX(36px);
+            transform: translateX(36px);
+	              }
+		          .sliderg:after {
+		            background-color: red;
+	                     }
+		            input:checked + .sliderg {
+		                  background-color: #ccc;
+		              }
+=======
+
+	    input:hover + .sliderh {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	  }
+
+	  input:checked + .sliderh:before {
+	    -webkit-transform: translateX(26px);
+	    -ms-transform: translateX(26px);
+	    transform: translateX(26px);
+	  }
+	  
+    .sliderg {
+      position: absolute;
+	        cursor: pointer;
+	  top: 0;
+	    left: 0;
+      right: 0;
+        bottom: 0;
+	  background-color: #ccc;
+	    -webkit-transition: .4s;
+	      transition: .4s;
+	    }
+
+    .sliderg:before {
+      position: absolute;
+	  height: 26px;
+    width: 26px;
+      left: 4px;
+	      content: "GangSTR";
+        bottom: 4px;
+	  background-color: green;
+          background-size: auto;
+    -webkit-transition: .4s;
+      transition: .4s;
+	    }
+
+    .sliderg:after {
+	    background-color: red;
+    }
+
+	    input:checked + .sliderg {
+		      background-color: #2196F3;
+	    }
+
+	    input:focus + .sliderg {
+	    box-shadow: 0 0 1px #2196F3;
+	  }
+
+	  input:checked + .sliderg:before {
+	    -webkit-transform: translateX(26px);
+	    -ms-transform: translateX(26px);
+	    transform: translateX(26px);
+	  }
+
+>>>>>>> d54144eb894dc9ee1d51d269efb5e5c5255e28f3
+</style>
+
+<BODY >
+
+<script>
+    function hideRow(id){
+	    if (id == 'h') {
+		    var rows= document.querySelectorAll('tbody tr.H');}
+	    if (id == 'g') {
+		    var rows= document.querySelectorAll('tbody tr.G');}
+		  for (var i=0;i<rows.length;i+=1){
+			  if (rows[i].style.display == ''){
+		          rows[i].style.display = 'none';
+			  }
+				  else {
+					  rows[i].style.display='';
+				  }
+			    }
+    }
+
+</script>
+
+<div id="plotLegend" class="plotfooter"></div>
+
+<!-- Main table of STRs in this region -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <p> <b> Motif length:</b> <mark class="gray"> 1: gray, <mark class="red"> 2: red , <mark class="gold"> 3: gold, <mark class="blue"> 4: blue, <mark class="purple"> 5: purple, <mark class="green"> 6: green </p>
+      <h6> Hover over table column headings to display addtional details </h6>  
+<!--      <button type="submit" onclick="hideRow('h')">HipSTR</button>
+<button type="submit" onclick="hideRow('g')">GangSTR</button> -->
+        <label class="switch">
+<<<<<<< HEAD
+		<input type="checkbox" class="switch-input" value="HipSTR" onclick="hideRow('h');">
+		<span class="switch-label" data-on="HipSTR" data-off="HipSTR Off"> </span> <span class="switch-handle"></span> </label>
+	<label class="switch">
+		   <input type="checkbox" class="switch-input" value="GangSTR" onclick="hideRow('g');">
+		   <span class="switch-label" data-on="GangSTR" data-off="GangSTR Off"> <span class="switch-handle"> </span> 
+=======
+		<input type="checkbox" value="HipSTR" onclick="hideRow('h');">
+		  <span class="sliderh" id="sliderh"></span> </label>
+	<label class="switch">
+		   <input type="checkbox" value="GangSTR" onclick="hideRow('g');">
+		    <span class="sliderg" id="sliderg"></span> 
+>>>>>>> d54144eb894dc9ee1d51d269efb5e5c5255e28f3
+	</label>
+        <div id="variants_table_container" style>
+	<table border="1" cellpadding="5" cellspacing="5" class="table table-bordered">
+	  <thead class="tablesorter-header"><th><abbr title="The chromosome, start position, and end position of the STR in the hg19 reference genome"> STR Locus (hg19)</abbr></th><th><abbr title="The motif (repeat unit) of each STR is given in canonical format. The canonical repeat unit is defined as the lexicographically first repeat unit when considering all rotations and strand orientations of the repeat sequence. For example, the canonical repeat unit for the repeat sequence CAGCAGCAGCAG would be AGC."> Motif</th></abbr><th><abbr title="The number of consecutive copies of the repeat motif present in the hg19 reference genome."># copies (hg19)</abbr></th><th><abbr title="eSTRs are STRs whose lengths are linearly associated with expression of nearby genes. Each circle gives the effect size of significant eSTRs identified in the GTEx cohort (Fotsing et al. BiorXiv 2018). Circles are color-coded by tissue. Hover over a circle to see the tissue and target gene of each eSTR. Click on an STR to see more information about eSTR effects.">  eSTRs (FDR<0.1)</abbr>  </th> <th><abbr title="Heterozygosity gives a measure of how polymorphic the STR is. It is computed as 1-(sum of squared frequency of each allele). Values close to 1 indicate highly polymorphic STRs. Values close to 0 indicate an STR that is mostly not variable in the population."> Heterozygosity </abbr></th></thead>
+	  <tbody>
+	  {% for d in table %}
+	  <tr
+            {% set geno = "H" %}
+            {% if d[6][:1] == "G" %}
+                {% set geno = "G" %}
+            {% endif %}
+	    class={{ geno }}>
+	    <td><a href="/locus?STRID={{d[6]}}" target="_blank"> {{ d[0] }}:{{ d [1] }}-{{ d[2] }} <sup>{{ geno }}</sup></a></td>
+	    <td>{{ d[3] }}</td>
+	    <td>{{'%0.1f' % d[5]|float}}</td>
+            {% if geno == "H" %}
+            <td>{{ d[13] | safe }}</td>
+            {% else %}
+            <td> </td>
+            {% endif %}
+            <td>{{ d[10] | safe }}</td>
+	  </tr>
+	  {% endfor %}
+	  </tbody>
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}

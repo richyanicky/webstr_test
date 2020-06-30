@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block body %}
+    <script>
+        $('#navbar_form_container').hide();
+    </script>
+    <div class="container">
+      <div class="row">
+	  <div class="col-md-1"></div>
+	  <div class="col-md-9">
+	    <br>
+	    <div class="bg-image">
+	      <br>
+              <h1 id="home-title">WebSTR: a population-wide database of short tandem repeat variation in humans</h1>
+	      <br>
+	    </div>
+	</div>
+      </div>
+      <div class="row">
+	<div class="col-md-1"></div>
+        <div class="col-md-9">
+          <div id="home-searchbox">
+            <form action="/awesome">
+              <input type="submit" style="display: none;"/>
+              <input id="home-searchbox-input" name="query" class="form-control input-lg awesomebar" type="text" placeholder="Get started by searching for a gene or genomic region"/>
+              <input type="submit" style="position: absolute; left: -9999px"/>
+            </form>
+            <p class="text-muted">
+              Examples - Gene: <a href="/awesome?query=PCSK9">PCSK9</a>,
+              Region: <a href="/awesome?query=22:46615715-46625880">22:46615715-46625880</a>
+            </p>
+          </div>
+        </div>
+	<div class="col-md-1"></div>
+      </div>
+      <div class="row" style="font-size: 18px;">
+	<div class="col-md-1"></div>
+        <div class="col-md-9">
+	  <a name="about"></a>
+          <div>
+            <p>
+	      WebSTR contains population and genome-wide information about genetic variation and other characteristics of short tandem repeats (STRs) in humans including:
+	      <ul>
+		<li>Expression STRs in GTEx (see <a href="https://www.biorxiv.org/content/early/2018/12/13/495226">Fotsing <em>et al.</em></a>)</li>
+		<li>STR imputation metrics (see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6199332/">Saini <em>et al.</em></a>)</li>
+		<li>STR mutation rates and constraint scores (see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5679271/">Gymrek <em>et al.</em></a>)</li>
+	      </ul>
+	      Per-cohort allele frequencies at each STR are coming soon!
+	    </p>
+	    <p>
+	    The <a href="/about">about</a> page describes the datasets in detail and a brief tutorial to help you get started.
+	    </p>
+          </div>
+        </div>
+      </div>
+      {% endblock %}

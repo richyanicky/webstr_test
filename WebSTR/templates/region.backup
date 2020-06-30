@@ -1,0 +1,233 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-157646340-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+        gtag('config', 'UA-157646340-1');
+</script>
+
+<!-- Div for the plotly chart -->
+<div id="chart" class="chart"></div>
+<script type="text/javascript">
+  var chrom = {{chrom}};
+  var graphs = {{graphJSON | safe}};
+  var layout = {{layoutJSON | safe}};
+  var strids = {{strids | safe}};
+
+  var myPlot = document.getElementById('chart'),
+    d3 = Plotly.d3,
+    data = graphs,
+    layout=layout;
+
+  Plotly.newPlot('chart', data, layout);
+
+  myPlot.on('plotly_click', function(data){
+    for(var i=0; i < data.points.length; i++){
+        if (data.points[i].curveNumber==1) {
+          url="None";
+        }
+        else {
+          url="/locus?STRID="+strids[data.points[i].pointNumber]
+        }
+    }
+    if (url != "None") {
+    var win = window.open(url, "_blank");
+    win.focus();
+    }
+});
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip(); 
+});
+
+
+</script>
+<style>
+mark.red {
+    color:#ff0000;
+    background: white;}
+mark.gray {
+    color:gray;
+    background: white;}
+mark.gold {
+    color:gold;
+    background: white;}
+mark.blue {
+    color:blue;
+    background: white;}
+mark.purple {
+    color:purple;
+    background: white;}
+mark.green {
+    color:green;
+    background: white;}
+
+
+.switch {
+  position: relative;
+    display: inline-block;
+	     width: 80px;
+	     height: 24px;
+}
+
+	    /* Hide default HTML checkbox */
+    .switch input {
+	      opacity: 0;
+	        width: 0;
+		  height: 0;
+	    }
+
+	    /* The slider */
+    .sliderh {
+      position: absolute;
+	        cursor: pointer;
+	  top: 0;
+	    left: 0;
+      right: 0;
+        bottom: 0;
+	  background-color: #ccc;
+	    -webkit-transition: .4s;
+	      transition: .4s;
+    }
+    .sliderh:before {
+      position: absolute;
+	  height: 20px;
+    width: 20px;
+      left: 4px;
+	      content: "HipSTR";
+        bottom: 4px;
+	  background-color: green;
+          background-size: auto;
+    -webkit-transition: .4s;
+      transition: .4s;
+	    }
+	    input:hover + .sliderh {
+            box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	  }
+	  input:checked + .sliderh:before {
+	    -webkit-transform: translateX(36px);
+	    -ms-transform: translateX(36px);
+	    transform: translateX(36px);
+	  }
+	  .sliderh:after {
+		  background-color: red;
+			  }
+	  input:checked + .sliderh {
+		background-color: #ccc;
+	  }
+    .sliderg {
+      position: absolute;
+	        cursor: pointer;
+	  top: 0;
+	    left: 0;
+      right: 0;
+        bottom: 0;
+	  background-color: #ccc;
+	    -webkit-transition: .4s;
+	      transition: .4s;
+	    }
+    .sliderg:before {
+      position: absolute;
+	  height: 20px;
+    width: 20px;
+      left: 4px;
+	      content: "GangSTR";
+        bottom: 4px;
+	  background-color: green;
+          background-size: auto;
+    -webkit-transition: .4s;
+      transition: .4s;
+	    }
+       input:hover + .sliderg {
+	       box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+       }
+
+    .sliderg:after {
+         background-color: red;
+    }
+
+     input:checked + .sliderg {
+         background-color: #ccc;
+	    }
+
+	  input:checked + .sliderg:before {
+	    -webkit-transform: translateX(36px);
+	    -ms-transform: translateX(36px);
+	    transform: translateX(36px);
+	  }
+
+</style>
+
+<BODY >
+
+<script>
+    function hideRow(id){
+	    if (id == 'h') {
+		    var rows= document.querySelectorAll('tbody tr.H');}
+	    if (id == 'g') {
+		    var rows= document.querySelectorAll('tbody tr.G');}
+		  for (var i=0;i<rows.length;i+=1){
+			  if (rows[i].style.display == ''){
+		          rows[i].style.display = 'none';
+			  }
+				  else {
+					  rows[i].style.display='';
+				  }
+			    }
+    }
+
+</script>
+
+<div id="plotLegend" class="plotfooter"></div>
+
+<!-- Main table of STRs in this region -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <p> <b> Motif length:</b> <mark class="gray"> 1: gray, <mark class="red"> 2: red , <mark class="gold"> 3: gold, <mark class="blue"> 4: blue, <mark class="purple"> 5: purple, <mark class="green"> 6: green </p>
+      <h6> Hover over table column headings to display addtional details </h6>  
+<!--      <button type="submit" onclick="hideRow('h')">HipSTR</button>
+<button type="submit" onclick="hideRow('g')">GangSTR</button> -->
+        <label class="switch">
+		<input type="checkbox" value="HipSTR" onclick="hideRow('h');">
+		  <span class="sliderh" id="sliderh"></span> </label>
+	<label class="switch">
+		   <input type="checkbox" value="GangSTR" onclick="hideRow('g');">
+		    <span class="sliderg" id="sliderg"></span> 
+	</label>
+        <div id="variants_table_container" style>
+	<table border="1" cellpadding="5" cellspacing="5" class="table table-bordered">
+	  <thead class="tablesorter-header"><th><abbr title="The chromosome, start position, and end position of the STR in the hg19 reference genome"> STR Locus (hg19)</abbr></th><th><abbr title="The motif (repeat unit) of each STR is given in canonical format. The canonical repeat unit is defined as the lexicographically first repeat unit when considering all rotations and strand orientations of the repeat sequence. For example, the canonical repeat unit for the repeat sequence CAGCAGCAGCAG would be AGC."> Motif</th></abbr><th><abbr title="The number of consecutive copies of the repeat motif present in the hg19 reference genome."># copies (hg19)</abbr></th><th><abbr title="eSTRs are STRs whose lengths are linearly associated with expression of nearby genes. Each circle gives the effect size of significant eSTRs identified in the GTEx cohort (Fotsing et al. BiorXiv 2018). Circles are color-coded by tissue. Hover over a circle to see the tissue and target gene of each eSTR. Click on an STR to see more information about eSTR effects.">  eSTRs (FDR<0.1)</abbr>  </th> <th><abbr title="Heterozygosity gives a measure of how polymorphic the STR is. It is computed as 1-(sum of squared frequency of each allele). Values close to 1 indicate highly polymorphic STRs. Values close to 0 indicate an STR that is mostly not variable in the population."> Heterozygosity </abbr></th></thead>
+	  <tbody>
+	  {% for d in table %}
+	  <tr
+            {% set geno = "H" %}
+            {% if d[6][:1] == "G" %}
+                {% set geno = "G" %}
+            {% endif %}
+	    class={{ geno }}>
+	    <td><a href="/locus?STRID={{d[6]}}" target="_blank"> {{ d[0] }}:{{ d [1] }}-{{ d[2] }} <sup>{{ geno }}</sup></a></td>
+	    <td>{{ d[3] }}</td>
+	    <td>{{'%0.1f' % d[5]|float}}</td>
+            {% if geno == "H" %}
+            <td>{{ d[13] | safe }}</td>
+            {% else %}
+            <td> </td>
+            {% endif %}
+            <td>{{ d[10] | safe }}</td>
+	  </tr>
+	  {% endfor %}
+	  </tbody>
+	</table>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}

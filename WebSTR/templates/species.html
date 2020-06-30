@@ -1,0 +1,11 @@
+<html>
+	    <body>
+		    <form>
+			    <select multiple="multiple">
+				    {% for item in items %}
+				    <option value="{{ item.field_name }}">{{ item.field_name }}</option>
+				    {% endfor %}
+			    </select>
+		    </form>
+	    </body>
+</html>
